@@ -37,9 +37,8 @@ MESSAGE = (
 )
 
 NOTE = (
-    '<div class="mobnote"><b>Best on a laptop.</b> This is a desktop app mock-up, so it is '
-    "laid out for a wide screen. On a phone the window is scaled down — rotate sideways or "
-    "open on a computer to see the detail.</div>"
+    '<div class="mobnote"><b>Best on a laptop.</b> This is a desktop window at full width, so on a '
+    "phone it is scaled down. Rotate, or open it on a computer for the detail.</div>"
 )
 
 HEAD_BLOCK = """<title>Aureon Pulse — design preview</title>

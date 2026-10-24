@@ -22,8 +22,8 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 
 <style>
-/* Layout: presentation page (pickers, scaled app window, notes). The page is neutral and theme-aware; the mock window carries its own tokens.
-   Type is kept light on purpose: regular and medium for text, semibold only for titles. */
+/* Review page: pickers, scaled app window, notes. Neutral and theme-aware; the mock window carries
+   its own tokens. Type is light on purpose: regular and medium for text, semibold only for titles. */
 :root {
   --pg-bg: #ECEAE4; --pg-ink: #1B1A17; --pg-ink2: #5B5850; --pg-line: rgba(27,26,23,.14); --pg-card: #F6F4EF; --pg-accent: #7A5C20;
   --f: "Figtree", "Avenir Next", system-ui, sans-serif;
@@ -143,11 +143,11 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
 .mbpop { position: absolute; z-index: 6; } .mbbar { height: 3px; border-radius: 2px; background: var(--line2); margin-top: 8px; overflow: hidden; } .mbbar i { display: block; height: 100%; background: var(--accent); }
 </style>
 
-<div class="wrap"><div class="mobnote"><b>Best on a laptop.</b> This is a desktop app mock-up, so it is laid out for a wide screen. On a phone the window is scaled down — rotate sideways or open on a computer to see the detail.</div>
+<div class="wrap"><div class="mobnote"><b>Best on a laptop.</b> This is a desktop window at full width, so on a phone it is scaled down. Rotate, or open it on a computer for the detail.</div>
   <h1>Aureon Pulse</h1>
-  <p class="lede">The redesign, with your latest notes: one always-visible top bar with Home and search, Compact and Comfortable layouts in Settings, a lighter typeface, many theme options (including AMOLED and a softer light mode), a Home that recommends by time of day, Add folder, a mini player you can design, and a menu bar player that closes by itself. Everything below is a mock-up you can click; nothing is built yet.</p>
+  <p class="lede">A clickable mock-up of the rebuilt interface: one top bar with Home and search, Compact and Comfortable layouts, lighter type, more themes, a Home that follows the time of day, Add folder, and both players. Twelve screens, all clickable. None of it is wired into the app yet.</p>
 
-  <p style="margin-top:14px;font-size:13px">The pickers above the window are only for this preview. In the app, appearance, layout and type are in Settings → Appearance.</p>
+  <p style="margin-top:14px;font-size:13px">The pickers above the window exist only on this page. In the app they live in Settings → Appearance.</p>
   <div class="bar"><div><span class="lab">Screen</span><span class="seg" id="screens"></span></div></div>
   <div class="bar"><div><span class="lab">Appearance</span><span class="seg" id="themes"></span></div><div><span class="lab">Density</span><span class="seg" id="dens"></span></div><div><span class="lab">Typeface</span><span class="seg" id="fonts"></span></div><div><span class="lab">Weight</span><span class="seg" id="wts"></span></div></div>
   <div class="bar" id="homebar"><div><span class="lab">Home preview</span></div><label class="rangep"><span style="font-size:13px">Time</span><input id="hr" type="range" min="0" max="23.5" step="0.5" aria-label="Time of day"><output id="hrout"></output></label><div><span class="seg" id="profiles"></span></div><button class="btn-p" id="refresh" type="button">New launch</button></div>
@@ -158,9 +158,9 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
 
   <div class="cols" id="plan"></div>
 
-  <div class="sec"><h2>What people love, and what we did with it</h2><div class="scroll-x"><table class="map" id="loves"></table></div></div>
-  <div class="sec"><h2>What people hate, and how this avoids it</h2><div class="scroll-x"><table class="map" id="hates"></table></div></div>
-  <div class="sec"><h2>Typeface</h2><p>Spotify’s own face is licensed and cannot ship in Aureon, so these are free look-alikes. They are shown at regular and medium weights; the Weight picker above makes titles lighter or bolder.</p><div class="fontrow" id="fontrow"></div></div>
+  <div class="sec"><h2>What works elsewhere, and where it landed here</h2><div class="scroll-x"><table class="map" id="loves"></table></div></div>
+  <div class="sec"><h2>Where other players fall short, and how this avoids it</h2><div class="scroll-x"><table class="map" id="hates"></table></div></div>
+  <div class="sec"><h2>Typeface</h2><p>Spotify’s face is licensed and cannot ship in Aureon, so these are free stand-ins. The Weight picker above takes titles lighter or bolder.</p><div class="fontrow" id="fontrow"></div></div>
   <div class="sec"><h2>Sources</h2><p class="src" id="srcs"></p></div>
 </div>
 
@@ -422,7 +422,7 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
     else if (state.mpg === 'bg') page = '<div class="row" style="flex-direction:column;align-items:stretch;gap:8px;padding:10px 14px"><div class="l">Background</div><span class="segc" style="display:flex">' + [['solid', 'Solid'], ['gradient', 'Gradient'], ['blur', 'Blur'], ['starlight', 'Stars']].map(function (x) { return '<span class="' + (state.mbg === x[0] ? 'on' : '') + '" data-k="mbg" data-v="' + x[0] + '" style="cursor:pointer;flex:1;text-align:center;padding:5px 4px">' + x[1] + '</span>'; }).join('') + '</span></div>' + (state.mbg === 'gradient' ? sl('Colour strength', 'mgi', 0, 100, '%') : '') + (state.mbg === 'blur' ? sl('Blur amount', 'mblur', 10, 100, '%') : '') + (state.mbg === 'starlight' ? sl('Glow strength', 'mgi', 0, 100, '%') : '') + sl('Opacity', 'mop', 40, 100, '%') + '<div class="row" style="min-height:56px;padding:8px 14px"><small style="max-width:250px">' + ({ solid: 'A flat panel in the theme colour.', gradient: 'The cover’s colours washed across the window. It changes with every song.', blur: 'The cover, heavily blurred behind the controls, like Now Playing.', starlight: 'The same sky as the main window, drifting only while this page is open.' })[state.mbg] + '</small></div>';
     else page = sg('Mode', 'mth', [['follow', 'Follow'], ['dark', 'Dark'], ['light', 'Light']]) + dotsRow('Palette', 'mfam', Object.keys(FAM).map(function (k) { var c = pal(k, (state.mth === 'light' || (state.mth === 'follow' && state.t === 'light')) ? 'light' : 'dark'); return '<span class="dot' + (state.mfam === k ? ' on' : '') + '" data-k="mfam" data-v="' + k + '" title="' + k + '" style="width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,' + c[1] + ' 55%,' + c[2] + ' 55%)"></span>'; }).join('')) + dotsRow('Accent', 'macc', Object.keys(ACC).map(function (k) { return '<span class="dot' + (state.macc === k ? ' on' : '') + '" data-k="macc" data-v="' + k + '" title="' + k + '" style="width:20px;height:20px;background:' + accent(k, state.t) + '"></span>'; }).join('') + customDot('mini')) + dotsRow('Corners', 'mcr', [['sharp', 'Sharp'], ['soft', 'Soft'], ['round', 'Round']].map(function (x) { return '<span class="chip' + (state.mcr === x[0] ? ' on' : '') + '" data-k="mcr" data-v="' + x[0] + '" style="cursor:pointer;font-size:11px;padding:3px 9px">' + x[1] + '</span>'; }).join('')) + '<div class="row" style="min-height:52px;padding:8px 14px"><small style="max-width:250px">“Follow” uses the main window’s theme, accent and corners. Pick your own and the mini player keeps it.</small></div>';
     return side('appear') + '<div class="panel" style="grid-row:2;padding:20px 24px 0;overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div><h1 class="h1">Mini player</h1><div style="color:var(--ink2);margin-top:2px">Pick a layout and tune it. Your choice is saved on this Mac and used every time the mini player opens.</div></div><span style="display:flex;gap:8px;align-items:center"><span class="live-badge"><i></i>Live preview</span><button class="btn sm" data-reset="mini">Reset</button></span></div>' +
-      '<div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px"><div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">' + cards + '</div><div class="stage"><div class="wall"></div><div id="minipreview" style="position:relative;' + themeVars() + '">' + miniLayout(state) + '</div></div><div style="display:flex;justify-content:space-between;color:var(--ink3);font-size:12px;margin-top:8px"><span>Playing now: what you hear is what you see here</span><span>The preview draws only while this page is open</span></div></div>' +
+      '<div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px"><div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">' + cards + '</div><div class="stage"><div class="wall"></div><div id="minipreview" style="position:relative;' + themeVars() + '">' + miniLayout(state) + '</div></div><div style="display:flex;justify-content:space-between;color:var(--ink3);font-size:12px;margin-top:8px"><span>Synced to the playhead</span><span>Runs only while this page is open</span></div></div>' +
       '<div><div class="segc" style="margin-bottom:10px;display:flex">' + [['layout', 'Layout'], ['bg', 'Background'], ['look', 'Theme']].map(function (x) { return '<span class="' + (state.mpg === x[0] ? 'on' : '') + '" data-k="mpg" data-v="' + x[0] + '" style="cursor:pointer;flex:1;text-align:center">' + x[1] + '</span>'; }).join('') + '</div><div class="group">' + page + '</div></div></div></div>' + dock();
   }
   function themeVars() {
@@ -455,7 +455,7 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
   var lastTrack = -1;
   function liveTick() { var w = document.getElementById('win'); if (!w || state.s !== 'minicfg' || document.hidden) return; liveT += 0.25; var L = liveState(), T = TRK[L.i], A = ALB[L.i % 8]; if (lastTrack !== -1 && lastTrack !== L.i) updateMiniPreview(); lastTrack = L.i;
     w.querySelectorAll('[data-live]').forEach(function (n) { var k = n.getAttribute('data-live'); if (k === 'title') n.textContent = T[0]; else if (k === 'artist') n.textContent = A[1]; else if (k === 'pos') n.textContent = mmss(L.pos); else if (k === 'dur') n.textContent = mmss(L.dur); else if (k === 'clip' || k === 'prog') n.style.width = (100 * L.pos / L.dur) + '%'; }); }
-  function setLive(on) { if (liveTimer) { clearInterval(liveTimer); liveTimer = 0; } var w = document.getElementById('win'); if (w) w.classList.toggle('live', on); if (on) liveTimer = setInterval(liveTick, 250); var lb = document.getElementById('livebar'); if (lb) { lb.className = 'livebar' + (on ? ' run' : ''); lb.innerHTML = '<i></i>' + (on ? 'Live preview is running: only because Mini player settings is open' : 'Live preview is stopped: nothing is being rendered on this page'); } }
+  function setLive(on) { if (liveTimer) { clearInterval(liveTimer); liveTimer = 0; } var w = document.getElementById('win'); if (w) w.classList.toggle('live', on); if (on) liveTimer = setInterval(liveTick, 250); var lb = document.getElementById('livebar'); if (lb) { lb.className = 'livebar' + (on ? ' run' : ''); lb.innerHTML = '<i></i>' + (on ? 'Preview running, on this page only' : 'Preview stopped'); } }
   var VIEWS = { home: homeScreen, lib: libScreen, album: albumScreen, now: nowScreen, search: searchScreen, appear: appearScreen, folders: foldersScreen, snd: sndScreen, rooms: roomsScreen, mini: miniScreen, minicfg: minicfgScreen, menubar: menubarScreen };
 
   // ---- the sky behind the window (a 2D preview of Starlight) ----
@@ -489,7 +489,7 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
   }
 
   var LOVES = [
-    ['Recommendations that feel personal', 'Spotify’s Discover Weekly and Daily Mix, Plexamp’s sonic radio, Roon Radio.', 'Home is built from what you play and when. It changes with the time of day and at every launch, and says why.'],
+    ['Recommendations that feel personal', 'Spotify’s Discover Weekly and Daily Mix, Plexamp’s sonic radio, Roon Radio.', 'Built from what you play and when: it shifts with the hour, on every launch, and says why.'],
     ['A simple left sidebar and a bottom player', 'Tidal’s desktop layout is praised for exactly this.', 'The same frame, with an optional queue panel on the right.'],
     ['Deep metadata, credits, bios', 'Roon’s main pull for long-time users.', 'Album page has Songs, Credits and Booklet; every row shows format, depth and rate.'],
     ['Speed with huge libraries', 'Swinsian opens 100,000-track libraries in seconds; foobar2000 is light and fast.', 'Virtual lists, instant search, an A–Z rail. Slow jobs show progress and never block.'],
@@ -499,7 +499,7 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
   var HATES = [
     ['Desktop apps that look like phone apps', 'Spotify’s 2023 redesign: huge elements, half the screen wasted.', 'Desktop-sized rows and a Density switch.'],
     ['A social feed as a home page, video previews', 'The most common Spotify complaint.', 'Shelves of your own music. No video, no autoplay.'],
-    ['A buried or forced library', 'Pinned items stuck on top, no custom order.', 'A real Library page, custom order, an Add folder button in plain sight.'],
+    ['A buried or forced library', 'Pinned items stuck on top, no custom order.', 'A real Library page, custom order, and Add folder in plain sight.'],
     ['No way back from a redesign', '“No way to revert” was the loudest demand.', 'Every look setting has a Reset; sound settings mark what changed.'],
     ['Lag on big libraries', 'Apple Music on Mac: beach balls, slow scrolling.', 'Heavy work stays off the main thread; scans show progress.'],
     ['Empty space and extra clicks on Now Playing', 'Roon’s Now Playing; two clicks back to the album.', 'Cover, lyrics, queue and signal path in one view.'],
@@ -507,17 +507,17 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
   ];
   var SRC = [['Spotify community: new desktop UI', 'https://community.spotify.com/t5/Your-Library/What-s-up-with-this-new-desktop-UI/m-p/5525644'], ['Windows Latest on the Spotify redesign', 'https://www.windowslatest.com/2023/04/29/spotifys-new-design-for-windows-11-is-here-but-users-arent-happy/'], ['Mac Observer: Apple Music for Mac', 'https://www.macobserver.com/news/apple-music-for-mac-still-lags-behind-and-users-are-losing-patience/'], ['Headphonesty: Qobuz vs Tidal', 'https://www.headphonesty.com/2023/04/qobuz-vs-tidal/'], ['Roon community: price', 'https://community.roonlabs.com/t/a-comment-on-the-price/3628?page=2'], ['Roon community: Now Playing', 'https://community.roonlabs.com/t/the-now-playing-screen-is-still-uninspired/20482'], ['Plex forum: sonic analysis', 'https://forums.plex.tv/t/sonic-analysis-do-folks-bother-with-it/937638'], ['Setapp: best Mac players', 'https://setapp.com/lifestyle/best-music-players-for-mac'], ['Hydrogenaudio: foobar2000', 'https://hydrogenaudio.org/index.php?msg=815531'], ['Learn UI: Circular alternatives', 'https://www.learnui.design/blog/circular-similar-fonts.html']];
   var PLAN = [
-    ['One top bar, always visible', 'Back and forward, a Home button next to the search bar (⌘K), then devices and settings on the right. Nothing else. The sidebar has no Home, Search or Now Playing items: the big player bar below opens Now Playing (the ^ button, or click the cover). The Aureon mark replaces the clock on Home.'],
-    ['Layout and type live in Settings', 'Settings → Appearance holds Layout (Compact or Comfortable), Type weight (Regular is the default), Text size and Typeface. Compact is the dense layout: narrower sidebar, 32 px rows, smaller covers, albums as a list, a slimmer player bar. Comfortable is the roomier default.'],
-    ['Light mode that is easy on the eyes', 'Light themes are a soft warm grey with a Softness slider, never paper white. AMOLED is a new true-black dark theme for OLED screens.'],
-    ['Menu bar player', 'A small item always in the menu bar. Click it and the panel opens; click anywhere else and it closes, or let it close by itself after 3, 5, 10 or 30 seconds (or never). The floating mini bar stays. Try it on the Menu bar player screen.'],
-    ['Lighter type', 'Titles are now medium or semibold at 28 to 38 px, not 800 or 900. The Weight picker (Light, Regular, Bold) and four typefaces show the range.'],
-    ['More theming', 'Appearance screen: four themes, six accents, backdrop (Flat, Soft, Starlight), corner shape, weight, density. Starlight has star density, shooting stars (off, rare, often), nebula glow, motion speed and music reaction. The sky behind the window is a live preview.'],
-    ['A Home that recommends', 'Pick a time of day and a listener type above Home, then press New launch: mixes, shelves and their order change. Everything is computed on this Mac from play history, and can be turned off.'],
-    ['Add folders', 'An Add folder button in the Library header, the + in the sidebar, an Add menu (folder, files, network drive, cloud, CD) and a Library folders screen with watching and scan progress.'],
-    ['Mini player', 'Three forms: a menu bar player, a mini bar, and a mini with queue or lyrics. Open from the pin button.'],
-    ['Mini player, your way', 'Mini player settings: five layouts (menu bar, bar, card, square, lyrics); backgrounds (solid, gradient from the cover, blurred cover, starlight); the same theme, accent and corner options as the main window; cover size, opacity, progress style, controls, always on top. It is saved and used whenever the mini player opens. The preview plays what is playing now, and exists only while the settings page is open: a timer starts when the page appears and stops when it disappears, so nothing renders anywhere else.'],
-    ['Queue in the Library', 'Library overlays → Queue panel: reorderable queue on the right, with Play next and Add to queue on hover.']
+    ['One top bar, always visible', 'Back and forward, a Home button beside the search field (⌘K), then devices and settings on the right. The sidebar drops Home, Search and Now Playing: the player bar opens Now Playing instead, through the ^ button or a click on the cover.'],
+    ['Layout and type live in Settings', 'Appearance holds Layout (Compact or Comfortable), Type weight (Regular by default), Text size and Typeface. Compact is the dense one: narrower sidebar, 32 px rows, smaller covers, albums as a list, a slimmer player bar.'],
+    ['Light mode that is not paper white', 'Light themes sit on a warm grey with a Softness slider. AMOLED is a true-black dark theme for OLED panels.'],
+    ['Menu bar player', 'A small item sits in the menu bar. Click it and the panel opens; clicking elsewhere closes it, or it closes itself after 3, 5, 10 or 30 seconds. The floating mini bar stays. The Menu bar player screen shows both.'],
+    ['Lighter type', 'Titles are medium or semibold at 28 to 38 px instead of 800 and 900. The Weight picker and four typefaces show the range.'],
+    ['More theming', 'Appearance covers five themes, six accents plus any colour, three backdrops (Flat, Soft, Starlight), corner shape, weight and density. Starlight carries star density, shooting stars, nebula glow and motion speed, and the sky behind the window is drawn live rather than pasted in.'],
+    ['A Home that recommends', 'Time of day and listener type drive it. Change either, press New launch, and the mixes, shelves and their order change. Suggestions come from play history and stay on the machine; the feature can be switched off.'],
+    ['Add folders', 'Add folder in the Library header, the + in the sidebar, a full add menu (folder, files, SMB, cloud, CD), and a folders screen with watching and scan progress.'],
+    ['Mini player', 'Three forms: a menu bar player, a mini bar, and a mini with queue or lyrics. The pin button opens it.'],
+    ['Mini player options', 'Five layouts, four backgrounds, and its own theme, accent and corners when it should not follow the main window. Cover size, opacity, progress style, always on top. Choices are saved per machine, and the preview runs only while this page is open.'],
+    ['Queue in the Library', 'The queue docks on the right. Rows drag to reorder, and Play next / Add to queue sit on hover.']
   ];
 
   function el(id) { return document.getElementById(id); }
@@ -538,15 +538,15 @@ input.rg { -webkit-appearance: none; appearance: none; height: 4px; border-radiu
     el('overlays').innerHTML = [['q', 'Queue panel'], ['am', 'Add menu']].map(function (x) { return '<button type="button" data-tg="' + x[0] + '" aria-pressed="' + state[x[0]] + '">' + x[1] + '</button>'; }).join('');
     el('hr').value = state.hr; el('hrout').textContent = clock(state.hr);
     el('homebar').style.display = state.s === 'home' ? '' : 'none'; el('libbar').style.display = state.s === 'lib' ? '' : 'none';
-    el('livebar-row').style.display = ''; setLive(state.s === 'minicfg'); setMb(state.s === 'menubar'); if (state.s === 'menubar') { var lb = el('livebar'); lb.className = 'livebar run'; lb.innerHTML = '<i></i>Menu bar demo is running: the countdown and the popover exist only on this page'; }
+    el('livebar-row').style.display = ''; setLive(state.s === 'minicfg'); setMb(state.s === 'menubar'); if (state.s === 'menubar') { var lb = el('livebar'); lb.className = 'livebar run'; lb.innerHTML = '<i></i>Menu bar demo running, countdown is live'; }
     fit(); try { localStorage.setItem('aureon-pulse', JSON.stringify(state)); } catch (e) {}
   }
   function fit() { var host = el('fit'), w = el('win'), sc = Math.min(1, host.clientWidth / 1200); w.style.transform = 'scale(' + sc + ')'; host.style.height = Math.round(760 * sc) + 'px'; }
 
-  table('loves', LOVES, ['What people love', 'Where it comes from', 'What this design does']); table('hates', HATES, ['What people dislike', 'Where it comes from', 'How this avoids it']);
+  table('loves', LOVES, ['What works', 'Where I found it', 'How it shows up here']); table('hates', HATES, ['What people dislike', 'Where I found it', 'How this avoids it']);
   el('plan').innerHTML = PLAN.map(function (p) { return '<section class="card"><h3>' + p[0] + '</h3><p style="margin:0">' + p[1] + '</p></section>'; }).join('');
-  el('srcs').innerHTML = SRC.map(function (s) { return '<a href="' + s[1] + '" target="_blank" rel="noopener">' + s[0] + '</a>'; }).join(' · ') + '<br>Forum threads, news items and reviews: opinion, not formal studies, and some are a few years old. Artists, albums and covers are invented.';
-  el('fontrow').innerHTML = Object.keys(FONTS).map(function (k) { return '<div style="font-family:' + FONTS[k] + ',sans-serif"><b>' + k + '</b>Harbour Lights · 24-bit 96 kHz<span style="font-family:var(--f)">' + ({ 'Figtree': 'Friendly geometric; named among the closest to Circular.', 'DM Sans': 'Low-contrast and slightly tighter.', 'Albert Sans': 'Calm and even; a little less round.', 'Plus Jakarta Sans': 'A touch more formal.' })[k] + '</span></div>'; }).join('');
+  el('srcs').innerHTML = SRC.map(function (s) { return '<a href="' + s[1] + '" target="_blank" rel="noopener">' + s[0] + '</a>'; }).join(' · ') + '<br>Sources are forum threads, reviews and news items: opinion, not studies, and a few are years old. Artists and albums are placeholders.';
+  el('fontrow').innerHTML = Object.keys(FONTS).map(function (k) { return '<div style="font-family:' + FONTS[k] + ',sans-serif"><b>' + k + '</b>Harbour Lights · 24-bit 96 kHz<span style="font-family:var(--f)">' + ({ 'Figtree': 'Geometric and warm, the closest to Circular.', 'DM Sans': 'Low-contrast and slightly tighter.', 'Albert Sans': 'Calm and even; a little less round.', 'Plus Jakarta Sans': 'A touch more formal.' })[k] + '</span></div>'; }).join('');
 
   document.addEventListener('click', function (e) {
     var act = e.target.closest('[data-act]'); if (act) { if (act.dataset.act === 'mbtoggle') { state.mbo = !state.mbo; render(); return; } if (act.dataset.act === 'mbout') { if (state.mbo && state.mboutside) { state.mbo = false; render(); } return; } }
